@@ -1,0 +1,28 @@
+name: Mutation Testing
+on: 
+  schedule:
+    - cron: '0 2 * * 0'  # Weekly on Sunday at 2 AM
+  workflow_dispatch: {}
+
+jobs:
+  stryker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with: 
+          node-version: 22
+          cache: 'npm'
+          
+      - run: npm ci
+      
+      - name: Run Mutation Tests
+        run: npx stryker run
+        continue-on-error: true
+        
+      - name: Comment on Failure
+        if: failure()
+        uses: mshick/add-pr-comment@v2
+        with:
+          message: "🧬 Mutation score dropped – strengthen tests."

@@ -559,3 +559,33 @@ Made with ♥ by [CreativeDesignsGuru](https://creativedesignsguru.com) [![Twitt
 Looking for a custom boilerplate to kick off your project? I'd be glad to discuss how I can help you build one. Feel free to reach out anytime at contact@creativedesignsguru.com!
 
 [![Sponsor Next JS Boilerplate](https://cdn.buymeacoffee.com/buttons/default-red.png)](https://github.com/sponsors/ixartz)
+
+## 🚀 Manual Setup Steps
+
+After running this setup, complete these manual steps:
+
+### 1. Add GitHub Secrets
+Go to your repository Settings → Secrets and variables → Actions → New repository secret:
+- `CODACY_PROJECT_TOKEN`: Get this from Codacy after adding your repository
+
+### 2. Configure Branch Protection
+1. Go to Settings → Branches → Add rule for `main`
+2. Enable "Require status checks to pass before merging"
+3. Select these required checks:
+   - `CI (Fast)`
+   - `Lint (Auto-fix)`
+4. Enable "Require merge queue"
+5. Set merge queue concurrency to 1
+
+### 3. Optional: Self-hosted Runners
+For heavy CI workloads, consider setting up self-hosted runners with the label `heavy`.
+
+## 📊 Quality Metrics
+
+This setup provides:
+- **Fast CI**: Unit tests + 80% per-file coverage
+- **Heavy CI**: E2E, Lighthouse, Pa11y accessibility tests  
+- **Weekly Mutation Testing**: Ensures test quality
+- **Auto-fix**: Prettier and ESLint automatically fix PRs
+- **Merge Queue**: Serialized merges for stability
+

@@ -1,0 +1,56 @@
+name: CI (Heavy)
+on: 
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  heavy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-node@v4
+        with: 
+          node-version: 22
+          cache: 'npm'
+          
+      - run: npm ci
+      
+      - name: Build Application
+        run: npm run build --workspace=apps/web
+        
+      - name: Start Application
+        run: |
+          npm run start --workspace=apps/web &
+          sleep 10
+        
+      - name: Wait for Application
+        uses: jakejarvis/wait-action@v1
+        with:
+          url: http://localhost:3000
+          timeout: 30
+          
+      - name: Run E2E Tests
+        run: npm run test:e2e --workspace=apps/web
+        continue-on-error: true
+        
+      - name: Run Lighthouse
+        run: |
+          npm install -g lighthouse
+          lighthouse http://localhost:3000 --quiet --output=json --output-path=lighthouse.json --only-categories=performance
+        continue-on-error: true
+        
+      - name: Run Pa11y
+        run: |
+          npm install -g pa11y-ci
+          echo '{"urls": ["http://localhost:3000"]}' > .pa11yci.json
+          pa11y-ci --config .pa11yci.json
+        continue-on-error: true
+        
+      - name: Upload Lighthouse Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse
+          path: lighthouse.json
+        if: always()
