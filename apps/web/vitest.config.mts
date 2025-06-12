@@ -4,6 +4,19 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  coverage: {
+    provider: "v8",
+    all: true,
+    include: ["src/**"],
+    reporter: ["text", "lcov", "html"],
+    thresholds: {
+      statements: 80,
+      branches: 75,
+      functions: 80,
+      lines: 80,
+      perFile: true
+    }
+  },
   plugins: [react(), tsconfigPaths()],
   test: {
     coverage: {
