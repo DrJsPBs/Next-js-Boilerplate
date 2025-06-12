@@ -1,3 +1,10 @@
+# [3.71.0](https://github.com/DrJsPBs/Next-js-Boilerplate/compare/v3.70.0...v3.71.0) (2025-06-12)
+
+
+### Features
+
+* **init:** scaffold Next.js boilerplate, add workspaces & configs ([a20ba03](https://github.com/DrJsPBs/Next-js-Boilerplate/commit/a20ba03d1208720623d0e9b6cb5752df32e17a0f))
+
 # [3.70.0](https://github.com/ixartz/Next-js-Boilerplate/compare/v3.69.0...v3.70.0) (2025-06-10)
 
 

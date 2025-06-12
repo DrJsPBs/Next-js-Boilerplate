@@ -1,6 +1,6 @@
 {
   "name": "ice-webapp-engine",
-  "version": "3.70.0",
+  "version": "3.71.0",
   "private": true,
   "author": "Ixartz (https://github.com/ixartz)",
   "workspaces": [
